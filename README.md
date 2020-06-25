@@ -5,8 +5,8 @@
 可以设置当距离可见区域多少PX时即进行加载图片，这样可使用户无感知
 ## 安装
 ```
-1、使用 composer 命令安装：composer require lipowei/imglazyload
-2、直接在 src 找到 ArticleImgLazyload.php 类库文件，直接拖到你的类目录内，include 该文件可直接使用
+方式1、使用 composer 命令安装：composer require lipowei/imglazyload
+方式2、直接在 src 找到 ArticleImgLazyload.php 类库文件，直接拖到你的类目录内，include 该文件可直接使用
 ```
 ## 使用
 ```
