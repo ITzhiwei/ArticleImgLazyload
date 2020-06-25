@@ -1,8 +1,8 @@
 <?php
-namespace lipowei\smallTools;
+namespace tcwei\smallTools;
 /**
  * Class ArticleImgLazyload 使文章中的图片进行懒加载，看不到的图片不加载，节省带宽
- * @package lipowei\smallTools 使用 composer 命令安装：composer require lipowei/imglazyload
+ * @package tcwei\smallTools 使用 composer 命令安装：composer require tcwei/imglazyload
  */
 class ArticleImgLazyload{
 
@@ -40,7 +40,7 @@ class ArticleImgLazyload{
         if($this->blacklist) {
             $content = preg_replace("/<img(.*)src=('|\")(.*$blacklist.*)('|\")/isU", '<img $1 srcno="$3"', $content);
         };
-        $newContent = preg_replace("/<img(.*)src=('|\")(.*)('|\")/isU", '<img $1 class="lipoweiLazyload" data-original="$3" src="'.$defaultImg.'"', $content);
+        $newContent = preg_replace("/<img(.*)src=('|\")(.*)('|\")/isU", '<img $1 class="tcweiLazyload" data-original="$3" src="'.$defaultImg.'"', $content);
         if($this->blacklist) {
             $newContent = preg_replace('/<img(.*)srcno="(.*)"/isU', '<img $1 src="$2"', $newContent);
         };
@@ -52,35 +52,35 @@ class ArticleImgLazyload{
               <script>
                 if(typeof IntersectionObserver === "function"){
                     //监听支持APP模式的webview
-                    var lipoweiObserver = new IntersectionObserver(function(changes){
+                    var tcweiObserver = new IntersectionObserver(function(changes){
                         for(var i=0;i<changes.length;i++){
                                 if(changes[i].intersectionRatio>0){
                                     (function(changesA, thisi){
                                         setTimeout(function(){
                                             var dataOriginalSrc = changesA[thisi].target.getAttribute("data-original");
                                             changesA[thisi].target.setAttribute("src", dataOriginalSrc);
-                                            lipoweiObserver.unobserve(changesA[thisi].target)
+                                            tcweiObserver.unobserve(changesA[thisi].target)
                                         }, '.$timeLazyload.');
                                     })(changes, i);
                                 };
                         }
                     },  {threshold: [0, 0.5, 1],rootMargin: "'.$distance.'px 0px"}
                     );
-                    var lipoweiLazyloadListItems = document.querySelectorAll(".lipoweiLazyload");
-                    lipoweiLazyloadListItems.forEach(function(item){lipoweiObserver.observe(item);});
+                    var tcweiLazyloadListItems = document.querySelectorAll(".tcweiLazyload");
+                    tcweiLazyloadListItems.forEach(function(item){tcweiObserver.observe(item);});
                 }else{
                     //浏览器基本已支持，若不支持的浏览器不考虑太多，浏览器内核过旧，使用JQ处理恢复正常图片路径，若无JQ则放弃
-                    var lipoweiLazyloadClock = true; //节流锁，已取消节流
+                    var tcweiLazyloadClock = true; //节流锁，已取消节流
                     var oneLoadImgClock = true;
                     try {
-                        function notIntersectionObserver() {lipoweiLazyloadStart();if(oneLoadImgClock){oneLoadImgClock=false;setTimeout(function(){lipoweiLazyloadStart();},100);}}
-                        function lipoweiLazyloadStart(){
-                            try{$(".lipoweiLazyload").not("[data-isLoading]").each(function () {if (isShow($(this))) {loadImg($(this));}})}catch (e) {setTimeout(function(){notIntersectionObserver();},200);}
+                        function notIntersectionObserver() {tcweiLazyloadStart();if(oneLoadImgClock){oneLoadImgClock=false;setTimeout(function(){tcweiLazyloadStart();},100);}}
+                        function tcweiLazyloadStart(){
+                            try{$(".tcweiLazyload").not("[data-isLoading]").each(function () {if (isShow($(this))) {loadImg($(this));}})}catch (e) {setTimeout(function(){notIntersectionObserver();},200);}
                         }
                         function isShow(thisNode){return thisNode.offset().top <= $(window).height()+$(window).scrollTop();}
                         function loadImg(thisImg){thisImg.attr("src", thisImg.attr("data-original"));thisImg.attr("data-isLoading",1);}
                         $(window).on("scroll",function(){
-                            if(lipoweiLazyloadClock){lipoweiLazyloadClock = false;lipoweiLazyloadStart();lipoweiLazyloadClock = true;/*由于此处代码针对低版本ie，加时间锁会出现图片不支持加载的BUG，这里不节流*/} ;
+                            if(tcweiLazyloadClock){tcweiLazyloadClock = false;tcweiLazyloadStart();tcweiLazyloadClock = true;/*由于此处代码针对低版本ie，加时间锁会出现图片不支持加载的BUG，这里不节流*/} ;
                         });
                         notIntersectionObserver();
                     } catch (e) {setTimeout(function(){notIntersectionObserver();},200);console.log("无JQ环境，每等待200毫秒后继续尝试执行");}
