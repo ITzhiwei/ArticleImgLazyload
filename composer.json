@@ -3,7 +3,7 @@
     "description": "文章图片懒加载，当文章中存在大量图片时，可使用该库进行图片懒加载，看不到的图片不进行加载，节省带宽",
     "type": "library",
     "license": "MIT",
-    "version": "v1.0",
+    "version": "v1.2",
     "autoload": {
       "psr-4": {
         "lipowei\\smallTools\\": "src/"
